@@ -1,0 +1,262 @@
+create database GH;
+use GH;
+
+create table Maneger(
+ID_Man int primary key auto_increment,
+Name_Maneger varchar(16),
+Email varchar(32),
+Address varchar(16),
+phone int 
+);
+create table Employee(
+E_ID int primary key auto_increment,
+Name_Emp varchar(16),
+HireDate date,
+phone int,
+ID_Maneger int not null,
+foreign key (ID_Maneger) references Maneger (ID_Man)
+);
+
+create table Full_time(
+E_ID int primary key,
+salary real ,
+foreign key (E_ID) references Employee (E_ID)
+);
+create table Part_time(
+E_ID int primary key,
+Hour_rate int ,
+foreign key (E_ID) references Employee (E_ID)
+);
+create table Supplier(
+ID_Sup int primary key auto_increment,
+Name_Sup varchar(16),
+Email varchar(32),
+phone int
+);
+CREATE TABLE Customer (
+    ID_cus INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    phone VARCHAR(15),
+    birth_date DATE,
+    password VARCHAR(255),
+    gender VARCHAR(10)
+);
+
+create table Orders(
+ID_order int primary key auto_increment,
+order_Date date
+);
+select * from Orders;
+
+CREATE TABLE product (
+    ID_P INT PRIMARY KEY AUTO_INCREMENT,          
+    Name_product VARCHAR(255) NOT NULL,           
+    price DECIMAL(10, 2) NOT NULL,                 
+    color VARCHAR(50),                                                  
+    discount DECIMAL(5, 2),                       
+    Stock INT NOT NULL,                            
+    category VARCHAR(100),                         
+    image_url VARCHAR(255)                      
+);
+
+
+create table order_line(   ## price and discount
+ID_order int not null,
+ID_P int not null,
+primary key (ID_P,ID_order),
+foreign key (ID_P) references Product (ID_P),
+foreign key (ID_order) references Orders (ID_order),
+quantity int
+);
+
+
+create table sales_process(
+ID_order int not null,
+ID_cus int not null,
+E_ID int not null,
+date_sale date not null,
+primary key (E_ID,ID_order,ID_cus),
+foreign key (ID_cus) references Customer (ID_cus),
+foreign key (ID_order) references Orders (ID_order),
+foreign key (E_ID) references Employee (E_ID)
+);
+
+create table Import_product(
+ID_Man int  not null,
+ID_Sup int not null,
+ID_P int not null,
+primary key (ID_Man,ID_Sup,ID_P),
+foreign key (ID_Man) references Maneger (ID_Man),
+foreign key (ID_Sup) references Supplier (ID_Sup),
+foreign key (ID_P) references Product (ID_P)
+);
+show tables;
+use gh;
+
+CREATE TABLE Cart (
+    Cart_ID INT AUTO_INCREMENT PRIMARY KEY,           -- Unique identifier for each cart entry
+    ID_cus INT NOT NULL,                              -- Customer ID (references Customer table)
+    ID_P INT NOT NULL,                                -- Product ID (references Product table)
+    quantity INT NOT NULL DEFAULT 1,                  -- Quantity of the product in the cart
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   -- When the cart entry was created
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- When the cart entry was last updated
+    FOREIGN KEY (ID_cus) REFERENCES Customer (ID_cus) ON DELETE CASCADE,
+    FOREIGN KEY (ID_P) REFERENCES Product (ID_P) ON DELETE CASCADE
+);
+
+select * from order_line;
+select * from Orders;
+select * from sales_process;
+
+
+
+SELECT 
+    p.category,
+    SUM(ol.quantity) AS total_products
+FROM 
+    Product p
+JOIN 
+    Order_Line ol ON p.ID_P = ol.ID_P
+JOIN 
+    Sales_Process sp ON ol.ID_order = sp.ID_order
+GROUP BY 
+    p.category;
+    
+    select * from order_line;
+    select * from product where ID_P = 34;
+
+
+-- INSERT INTO product (Name_product, price, color, discount, Stock, category, image_url) 
+-- VALUES
+-- ('test pic', 55.3,'white',2,20,'Accessories','https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg');
+
+-- Pants
+INSERT INTO product (Name_product, price, color, discount, Stock, category, image_url) VALUES
+('Slim Fit Jeans', 45.99, 'Blue', 10.00, 50, 'Pants', 'https://i.ibb.co/dgThYyv/1.png'),
+('Chino Pants', 39.99, 'Beige', 5.00, 30, 'Pants', 'https://i.ibb.co/MnPfZ8R/2.png'),
+('Cargo Pants', 49.99, 'Green', NULL, 20, 'Pants', 'https://i.ibb.co/xfxwQBq/3.png'),
+('Slim Fit Jeans', 45.99, 'Blue', 10.00, 50, 'Pants', 'https://i.ibb.co/pbM55cs/4.png'),
+('Chino Pants', 39.99, 'Beige', 5.00, 30, 'Pants', 'https://i.ibb.co/Z8YLqrQ/5.png'),
+('Cargo Pants', 49.99, 'Green', NULL, 20, 'Pants', 'https://i.ibb.co/cCrcjzr/6.png'),
+('Slim Fit Jeans', 45.99, 'Blue', 10.00, 50, 'Pants', 'https://i.ibb.co/Lnj19pH/7.png'),
+('Chino Pants', 39.99, 'Beige', 5.00, 30, 'Pants', 'https://i.ibb.co/0D7bng8/8.png'),
+('Cargo Pants', 49.99, 'Green', NULL, 20, 'Pants', 'https://i.ibb.co/D9wXvXf/9.png');
+
+-- Shirts
+INSERT INTO product (Name_product, price, color, discount, Stock, category, image_url) VALUES
+('Oxford Shirt', 29.99, 'White', 15.00, 40, 'Shirts', 'https://i.ibb.co/6HLSc58/1.png'),
+('Flannel Shirt', 34.99, 'Red/Black', NULL, 25, 'Shirts', 'https://i.ibb.co/C8sTZnb/2.png'),
+('Polo Shirt', 24.99, 'Navy', 5.00, 60, 'Shirts', 'https://i.ibb.co/NK8m3Kp/3.png'),
+('Oxford Shirt', 29.99, 'White', 15.00, 40, 'Shirts', 'https://i.ibb.co/DWhjdjz/4.png'),
+('Flannel Shirt', 34.99, 'Red/Black', NULL, 25, 'Shirts', 'https://i.ibb.co/fdRzTq7/5.png'),
+('Polo Shirt', 24.99, 'Navy', 5.00, 60, 'Shirts', 'https://i.ibb.co/NSQDRnB/6.png'),
+('Oxford Shirt', 29.99, 'White', 15.00, 40, 'Shirts', 'https://i.ibb.co/Svgsz6S/7.png'),
+('Flannel Shirt', 34.99, 'Red/Black', NULL, 25, 'Shirts', 'https://i.ibb.co/ScNn4TS/8.png'),
+('Polo Shirt', 24.99, 'Navy', 5.00, 60, 'Shirts', 'https://i.ibb.co/SRmscWN/9.png');
+
+-- Hoodies
+INSERT INTO product (Name_product, price, color, discount, Stock, category, image_url) VALUES
+('Pullover Hoodie', 39.99, 'Gray', NULL, 30, 'Hoodies', 'https://i.ibb.co/tYkzg76/1.png'),
+('Zip-Up Hoodie', 44.99, 'Black', 10.00, 20, 'Hoodies', 'https://i.ibb.co/gF9qF64/2.png'),
+('Graphic Hoodie', 54.99, 'White', 5.00, 15, 'Hoodies', 'https://i.ibb.co/5BGqJL4/3.png'),
+('Pullover Hoodie', 39.99, 'Gray', NULL, 30, 'Hoodies', 'https://i.ibb.co/1mK5GnK/4.png'),
+('Zip-Up Hoodie', 44.99, 'Black', 10.00, 20, 'Hoodies', 'https://i.ibb.co/JryQSHz/5.png'),
+('Graphic Hoodie', 54.99, 'White', 5.00, 15, 'Hoodies', 'https://i.ibb.co/P41YVBB/6.png'),
+('Pullover Hoodie', 39.99, 'Gray', NULL, 30, 'Hoodies', 'https://i.ibb.co/r5v4v3N/7.png'),
+('Zip-Up Hoodie', 44.99, 'Black', 10.00, 20, 'Hoodies', 'https://i.ibb.co/vqHGPNq/8.png'),
+('Graphic Hoodie', 54.99, 'White', 5.00, 15, 'Hoodies', 'https://i.ibb.co/LdMrz2w/9.png');
+
+-- Qamees
+INSERT INTO product (Name_product, price, color, discount, Stock, category, image_url) VALUES
+('Classic Qamees', 29.99, 'White', 10.00, 50, 'Qamees', 'https://i.ibb.co/3zzZZhW/1.png'),
+('Embroidered Qamees', 59.99, 'Black/Gold', NULL, 10, 'Qamees', 'https://i.ibb.co/WKr1DT5/2.png'),
+('Cotton Qamees', 34.99, 'Light Blue', 5.00, 20, 'Qamees', 'https://i.ibb.co/R6ByNrV/3.png'),
+('Classic Qamees', 29.99, 'White', 10.00, 50, 'Qamees', 'https://i.ibb.co/rQW6yjg/4.png'),
+('Embroidered Qamees', 59.99, 'Black/Gold', NULL, 10, 'Qamees', 'https://i.ibb.co/C8xD0WB/5.png'),
+('Cotton Qamees', 34.99, 'Light Blue', 5.00, 20, 'Qamees', 'https://i.ibb.co/zsKjZ4P/6.png'),
+('Classic Qamees', 29.99, 'White', 10.00, 50, 'Qamees', 'https://i.ibb.co/W0kSVS3/7.png'),
+('Embroidered Qamees', 59.99, 'Black/Gold', NULL, 10, 'Qamees', 'https://i.ibb.co/FKZBqgM/8.png'),
+('Cotton Qamees', 34.99, 'Light Blue', 5.00, 20, 'Qamees', 'https://i.ibb.co/TbMb5CY/9.png');
+
+-- Sweaters
+INSERT INTO product (Name_product, price, color, discount, Stock, category, image_url) VALUES
+('Crew Neck Sweater', 34.99, 'Burgundy', 10.00, 40, 'Sweaters', 'https://i.ibb.co/L9PP4k5/1.png'),
+('Crew Neck Sweater', 34.99, 'Burgundy', 10.00, 40, 'Sweaters', 'https://i.ibb.co/HgYvBV8/2.png'),
+('V-Neck Sweater', 39.99, 'Gray', 5.00, 30, 'Sweaters', 'https://i.ibb.co/x161CH7/3.png'),
+('Turtleneck Sweater', 49.99, 'Black', NULL, 25, 'Sweaters', 'https://i.ibb.co/JnQyWHy/4.png'),
+('Crew Neck Sweater', 34.99, 'Burgundy', 10.00, 40, 'Sweaters', 'https://i.ibb.co/Ttrgsmx/5.png'),
+('V-Neck Sweater', 39.99, 'Gray', 5.00, 30, 'Sweaters', 'https://i.ibb.co/HNcCWfM/6.png'),
+('Turtleneck Sweater', 49.99, 'Black', NULL, 25, 'Sweaters', 'https://i.ibb.co/hfWjnV1/7.png'),
+('V-Neck Sweater', 39.99, 'Gray', 5.00, 30, 'Sweaters', 'https://i.ibb.co/LvGqBj3/8.png'),
+('Turtleneck Sweater', 49.99, 'Black', NULL, 25, 'Sweaters', 'https://i.ibb.co/cJjDRL7/9.png');
+
+select * from product;
+select * from Customer;
+INSERT INTO Customer (name, email, phone, birth_date, password, gender)
+VALUES 
+('John Doe', 'john.doe@example.com', '123-456-7890', '1990-05-14', 'password123', 'Male'),
+('Jane Smith', 'jane.smith@example.com', '987-654-3210', '1985-09-23', 'securePass1', 'Female'),
+('Michael Johnson', 'michael.j@example.com', '555-789-1234', '1978-12-02', 'mjpass456', 'Male'),
+('Emily Davis', 'emily.d@example.com', '444-321-6789', '1995-07-30', 'emily789', 'Female'),
+('Robert Brown', 'robert.b@example.com', '111-222-3333', '1982-03-11', 'rbrownPass', 'Male'),
+('Laura Wilson', 'laura.w@example.com', '666-888-9999', '1998-11-19', 'lauraSecure', 'Female');
+
+select * from Customer;
+use gh;
+
+INSERT INTO Maneger (Name_Maneger, Email, Address, phone) 
+VALUES 
+('John Doe', 'johndoe@example.com', '123 Main St', 123456789),
+('Jane Smith', 'janesmith@example.com', '456 Elm St', 987654321);
+
+INSERT INTO Employee (Name_Emp, HireDate, phone, ID_Maneger) 
+VALUES 
+('Alice', '2023-01-15', 1122334, 1),
+('Bob', '2022-06-20', 22334455, 2);
+
+INSERT INTO Full_time (E_ID, salary) 
+VALUES 
+(1, 5000.00);
+
+INSERT INTO Part_time (E_ID, Hour_rate) 
+VALUES 
+(2, 25);
+
+INSERT INTO Supplier (Name_Sup, Email, phone) 
+VALUES 
+('ABC Supplies', 'abc@supplies.com', 111222333),
+('XYZ Supplies', 'xyz@supplies.com', 444555666);
+
+INSERT INTO Orders (order_Date) 
+VALUES 
+('2023-12-01'),
+('2023-12-02'),
+('2023-12-03');
+
+INSERT INTO Order_Line (ID_order, ID_P, quantity) 
+VALUES 
+(1, 1, 2),
+(1, 3, 1),
+(2, 2, 1),
+(3, 3, 3);
+INSERT INTO Sales_Process (ID_order, ID_cus, E_ID, date_sale) 
+VALUES 
+(1, 1, 1, '2023-12-01'),
+(2, 2, 2, '2023-12-02'),
+(3, 1, 1, '2023-12-03');
+INSERT INTO Import_Product (ID_Man, ID_Sup, ID_P) 
+VALUES 
+(1, 1, 1),
+(2, 2, 2),
+(1, 1, 3);
+
+
+-- Insert products into the Cart table for John Doe (ID_cus = 1)
+INSERT INTO Cart (ID_cus, ID_P, quantity) 
+VALUES 
+(1, 1, 2), -- John Doe adds 2 units of Product ID 1
+(1, 3, 1), -- John Doe adds 1 unit of Product ID 3
+(1, 5, 3), -- John Doe adds 3 units of Product ID 5
+(1, 7, 1), -- John Doe adds 1 unit of Product ID 7
+(1, 9, 4); -- John Doe adds 4 units of Product ID 9
