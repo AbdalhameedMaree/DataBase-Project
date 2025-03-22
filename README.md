@@ -18,13 +18,11 @@ User-friendly interface (if applicable)
 
 Technologies Used
 
-Database: MySQL / PostgreSQL / SQLite (Specify the one used)
+Database: MySQL
 
-Backend: Python / Java / Node.js (Specify the backend framework if used)
+Backend: php, javascript. 
 
-Frontend: HTML, CSS, JavaScript (If applicable)
-
-ORM: SQLAlchemy / Hibernate / Prisma (If used)
+Frontend: HTML, CSS, JavaScript
 
 Installation
 
