@@ -44,6 +44,13 @@ This project is a database management system designed to efficiently store, retr
 4. Push to the branch
 5. Open a pull request
 
+## PS
+- The ER Diagram has been modified a little bit, but this is the best picture I found
+- You should run the website using local host for everything to work correctly
+- to see how the website actually looks you can check my linked in post right here: https://shorturl.at/dgufV
+- I have loss the pictures that I have used in the website, but I'll try to replace them as soon as possible
+- extract the code file
+   
 ## License
 This project is licensed under the MIT License.
 
