@@ -1,0 +1,45 @@
+.details .container{
+  padding-top:150px ;
+}
+.details .row{
+  justify-content: space-around;
+}
+.details p {
+  width: 500px;
+  font-weight: bold;
+}
+.details img {
+  width: 500px;
+}
+.details h1{
+  font-size: 55px;
+}
+.single-details{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.details .price{
+  font-weight: bold;
+  color: red;
+  font-size: 30px;
+
+}
+.details .shop{
+  display: flex;
+  align-items: center;
+  gap: 150px;
+  color: var(--mainColor);
+
+}
+.details .number p{
+  font-size: 30px;
+  color: black;
+}
+.details .number{
+  display: flex;
+  width: 0px;
+  align-items: center;
+  gap: 20px;
+  color: var(--mainColor);
+}

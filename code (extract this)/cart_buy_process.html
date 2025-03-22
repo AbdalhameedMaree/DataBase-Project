@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- basic -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- mobile metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <!-- site metas -->
+    <title>G | H Brand</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- style css -->
+    <link rel="stylesheet" type="text/css" href="../css/details.css">
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <!-- font awesome -->
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/details.css">
+</head>
+
+<body>
+    <!-- banner bg main start -->
+    <div class="banner_bg_main">
+        <!-- header top section start -->
+        <div class="container">
+            <div class="header_section_top">
+                <div class="banner_row">
+                    <div class="custom_menu">
+                        <ul>
+                            <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+                            <li><a href="aboutus.html"><i class="fa fa-info-circle"></i> About</a></li>
+                            <li><a href="https://www.facebook.com/profile.php?id=100090435561114" target="_blank"><i
+                                        class="fa fa-envelope"></i> Contact</a></li>
+                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Your Cart</a></li>
+                            <li><a href="session_check.php?action=account"><i class="fa fa-user"></i> Account</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- header top section end -->
+    </div>
+    <!-- banner bg main end -->
+
+    <!-- General section form start -->
+    <section class="fashion_section">
+        <div class="container">
+            <div class="fashion_section_2">
+                <div class="row" id="fashion-products">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- General section form end -->
+    <!-- footer section start -->
+    <div class="footer_section layout_padding">
+        <div class="container">
+            <div class="logo"><a href="index.html"><img src="../images/brandLogo.png"></a></div>
+            <div class="input_bt">
+                <input type="text" class="mail_bt" placeholder="Your Email" name="Your Email">
+                <span class="subscribe_bt" id="basic-addon2"><a href="#">Subscribe</a></span>
+            </div>
+            <div class="location_main">Help Line Number : <a href="https://wa.me/970592448690" target="_blank">+970 592
+                    448
+                    690</a></div>
+        </div>
+    </div>
+    <!-- footer section end -->
+    <!-- copyright section start -->
+    <div class="copyright_section">
+        <div class="container">
+            <p class="copyright_text">© 2024 All Rights Reserved. Design by <a
+                    href="https://www.facebook.com/abdalhameed.maree">AbdAlhameed Maree</a></p>
+        </div>
+    </div>
+    <!-- copyright section end -->
+
+    <!-- Scripts -->
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id'); // Get the product ID from the URL
+
+        const apiEndpoint = "get_products.php";
+        const fashionProductsContainer = document.getElementById('fashion-products');
+
+        fetch(apiEndpoint)
+            .then(response => response.json())
+            .then(data => {
+                // Find the product with the matching ID
+                const productToShow = data.find(product => product.id === productId);
+
+                if (productToShow) {
+                    // Render the product details using the provided section structure
+                    const sectionElement = document.createElement('section');
+                    sectionElement.innerHTML = `
+                        <div class="details">
+                            <div class="container">
+                                <div class="row">
+                                    <img src="${productToShow.image}" alt="${productToShow.name}"/>
+                                    <div class="single-details">
+                                        <h1>${productToShow.name}</h1>
+                                        <p><strong>ID:</strong> ${productToShow.id}</p>
+                                        <p><strong>Category:</strong> ${productToShow.category}</p>
+                                        <p><strong>Color:</strong> ${productToShow.color}</p>
+                                        <p><strong>Stock:</strong> ${productToShow.stock}</p>
+                                        <p class="price">${productToShow.price} &#x24;</p>
+                                        <h2>${productToShow.additionalInfo || ""}</h2>
+                                        <div class="shop">
+                                            <div class="number">
+                                                <i class="fa-solid fa-minus fa-xl quantity-btn" id="decrease"></i>
+                                                <p id="quantity">1</p>
+                                                <i class="fa-solid fa-plus fa-xl quantity-btn" id="increase"></i>
+                                            </div>
+                                            <i class="fa-solid fa-cart-shopping fa-xl" id="add-to-cart"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    fashionProductsContainer.appendChild(sectionElement);
+
+                    // Initialize cart functionality
+                    let quantity = 1;
+
+                    const updateQuantityDisplay = () => {
+                        document.getElementById('quantity').textContent = quantity;
+                    };
+
+                    document.getElementById('decrease').addEventListener('click', () => {
+                        if (quantity > 1) {
+                            quantity--;
+                            updateQuantityDisplay();
+                        }
+                    });
+
+                    document.getElementById('increase').addEventListener('click', () => {
+                        quantity++;
+                        updateQuantityDisplay();
+                    });
+
+                    document.getElementById('add-to-cart').addEventListener('click', () => {
+                        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                        const existingProduct = cart.find(item => item.id === productId);
+
+                        if (existingProduct) {
+                            existingProduct.quantity += quantity;
+                        } else {
+                            cart.push({
+                                id: productId,
+                                quantity,
+                                details: productToShow
+                            });
+                        }
+
+                        // Store updated cart in localStorage
+                        localStorage.setItem('cart', JSON.stringify(cart));
+
+                        // Redirect to cart.html
+                        window.location.href = 'cart.html';
+                    });
+                } else {
+                    // Show a message if no product is found
+                    const messageElement = document.createElement('p');
+                    messageElement.textContent = "Product not found.";
+                    fashionProductsContainer.appendChild(messageElement);
+                }
+            })
+            .catch(error => console.error("Error fetching products:", error));
+    </script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="../css/cart.css">
+</head>
+
+<body>
+  <div class="card">
+    <div class="cart">
+      <div class="title">
+        <h1>Shopping Cart</h1>
+        <div class="text-muted" id="item-count">0 items</div>
+      </div>
+      <!-- Scrollable container for cart items -->
+      <div id="cart-items"></div>
+      <div class="go_back"><a href="index.html">&leftarrow; Back to shop</a></div>
+    </div>
+    <div class="summary">
+      <h1>Summary</h1>
+      <hr>
+      <div class="row">
+        <div class="col">ITEMS <span id="total-items">0</span></div>
+        <div class="col text-right">$ <span id="total-price">0.00</span></div>
+      </div>
+      <form>
+        <p>SHIPPING</p>
+        <select id="shipping-cost">
+          <option value="5">Slow Delivery - $5.00</option>
+          <option value="10">Standard Delivery - $10.00</option>
+          <option value="15">Fast Delivery - $15.00</option>
+        </select>
+      </form>
+      <div class="row">
+        <div class="col">TOTAL PRICE</div>
+        <div class="col text-right">$ <span id="grand-total">0.00</span></div>
+      </div>
+      <button class="btn" onclick="window.location.href='check_out.html'">CHECKOUT</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const cartItemsContainer = document.getElementById("cart-items");
+      const itemCountElement = document.getElementById("item-count");
+      const totalItemsElement = document.getElementById("total-items");
+      const totalPriceElement = document.getElementById("total-price");
+      const grandTotalElement = document.getElementById("grand-total");
+      const shippingCostElement = document.getElementById("shipping-cost");
+
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const apiEndpoint = "get_products.php";
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get("id");
+
+      if (productId) {
+        fetch(apiEndpoint)
+          .then(response => response.json())
+          .then(data => {
+            const productToShow = data.find(product => product.id === productId);
+            if (productToShow) {
+              const existingProduct = cart.find(item => item.id === productId);
+              if (existingProduct) {
+                existingProduct.quantity++;
+              } else {
+                cart.push({
+                  id: productId,
+                  quantity: 1,
+                  details: productToShow
+                });
+              }
+              localStorage.setItem("cart", JSON.stringify(cart));
+              updateCartUI();
+            }
+          })
+          .catch(error => console.error("Error fetching products:", error));
+      } else {
+        updateCartUI();
+      }
+
+      function updateCartUI() {
+        cartItemsContainer.innerHTML = "";
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        cart.forEach(item => {
+          const { id, quantity, details } = item;
+          const { name, price, image, color, category, stock , discount} = details;
+
+          totalItems += quantity;
+          totalPrice += quantity * price;
+
+          const cartItemHTML = `
+            <div class="row border-top border-bottom">
+              <div class="main">
+                <div class="col-2"><img src="${image}" alt="${name}"></div>
+                <div class="operations_col">
+                  <div class="text-muted">${name}</div>
+                </div>
+                <div class="operations_col">
+                  <a href="#" data-id="${id}" class="quantity-btn" data-action="decrease">-</a>
+                  <span class="border">${quantity}</span>
+                  <a href="#" data-id="${id}" class="quantity-btn" data-action="increase">+</a>
+                </div>
+                <div class="operations_col">$ ${(quantity * price).toFixed(2)} <span class="close" data-id="${id}">&#10005;</span></div>
+              </div>
+            </div>
+          `;
+          cartItemsContainer.innerHTML += cartItemHTML;
+        });
+
+        const selectedShippingCost = parseFloat(shippingCostElement.value);
+
+        itemCountElement.textContent = `${totalItems} items`;
+        totalItemsElement.textContent = totalItems;
+        totalPriceElement.textContent = totalPrice.toFixed(2);
+        grandTotalElement.textContent = (totalPrice + selectedShippingCost).toFixed(2);
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+
+      function handleQuantityChange(productId, action) {
+        const product = cart.find(item => item.id === productId);
+        if (action === "increase") {
+          product.quantity++;
+        } else if (action === "decrease" && product.quantity > 1) {
+          product.quantity--;
+        }
+        updateCartUI();
+      }
+
+      function handleRemoveProduct(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        updateCartUI();
+      }
+
+      cartItemsContainer.addEventListener("click", e => {
+        if (e.target.classList.contains("quantity-btn")) {
+          e.preventDefault();
+          const productId = e.target.dataset.id;
+          const action = e.target.dataset.action;
+          handleQuantityChange(productId, action);
+        } else if (e.target.classList.contains("close")) {
+          e.preventDefault();
+          const productId = e.target.dataset.id;
+          handleRemoveProduct(productId);
+        }
+      });
+
+      shippingCostElement.addEventListener("change", updateCartUI);
+    });
+    
+  </script>
+  
+
+</body>
+
+</html>

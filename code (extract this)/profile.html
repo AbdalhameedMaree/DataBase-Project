@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>G | H Brand</title>
+
+   <link rel="stylesheet" type="text/css" href="../css/style.css">
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <link rel="stylesheet" type="text/css"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+   <div class="container">
+      <div class="header_section_top">
+         <div class="banner_row">
+            <div class="custom_menu">
+               <ul>
+                  <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+                  <li><a href="aboutus.html"><i class="fa fa-info-circle"></i> About</a></li>
+                  <li><a href="https://www.facebook.com/profile.php?id=100090435561114" target="_blank"><i
+                           class="fa fa-envelope"></i> Contact</a></li>
+                  <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Your Cart</a></li>
+                  <li><a href="session_check.php?action=account"><i class="fa fa-user"></i> Account</a></li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <section class="box_main row"
+         style="justify-content: center; display: flex; align-items: center; height: auto; width: 100%;">
+         <div class="container" style="padding: 20px; width: 100%;">
+            <h2>Your Information </h2>
+            <div id="fashion_section_2"></div>
+
+            <div class="info-row">
+               <span><strong>Name: </strong></span>
+               <span id="customer-name"> N/A</span>
+               <a href="#" class="edit-btn" onclick="editField('name')">Edit</a>
+            </div>
+
+            <div class="info-row">
+               <span><strong>Email: </strong></span>
+               <span id="customer-email"> N/A</span>
+               <a href="#" class="edit-btn" onclick="editField('email')">Edit</a>
+            </div>
+
+            <div class="info-row">
+               <span><strong>Phone: </strong></span>
+               <span id="customer-phone"> N/A</span>
+               <a href="#" class="edit-btn" onclick="editField('phone')">Edit</a>
+            </div>
+
+            <div class="info-row">
+               <span><strong>Birth Date: </strong></span>
+               <span id="customer-birth"> N/A</span>
+               <a href="#" class="edit-btn" onclick="editField('birth')">Edit</a>
+            </div>
+
+            <div class="info-row">
+               <span><strong>Gender: </strong></span>
+               <span id="customer-gender"> N/A</span>
+               <a href="#" class="edit-btn" onclick="editField('gender')">Edit</a>
+            </div>
+
+            <div class="info-row">
+               <span><strong>Log Out: </strong></span>
+                  <a href="logout.php" class="edit-btn">Logout</a>
+            </div>
+         </div>
+      </section>
+
+      <style>
+         .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+         }
+
+         .info-label {
+            flex: 1;
+            text-align: left;
+            font-weight: bold;
+         }
+
+         .info-value {
+            flex: 2;
+            text-align: center;
+            font-size: 16px;
+         }
+
+         .edit-btn {
+            flex: 1;
+            text-align: right;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+         }
+
+         .edit-btn:hover {
+            text-decoration: underline;
+         }
+
+         @media (max-width: 100%) {
+            .info-row {
+               flex-direction: column;
+               align-items: flex-start;
+            }
+
+            .info-label,
+            .info-value,
+            .edit-btn {
+               text-align: left;
+               margin: 5px 0;
+            }
+         }
+      </style>
+
+      <div class="container" style="text-align: center;">
+         <p><strong>Total Products Bought:</strong> <span id="totalBought">Loading...</span></p>
+         <p><strong>Total Purchase Price:</strong> <span id="totalPurchasePrice">Loading...</span></p>
+         <h1>Customer Purchase Insights</h1>
+      </div>
+      
+      <style>
+         .box_main {
+             display: flex;
+             gap: 20px;
+             box-sizing: border-box;
+             margin: 10px;
+             border: none;
+             padding: 15px;
+             text-align: center;
+             background-color: #f9f9f9;
+             border-radius: 8px;
+             width: calc(33.333% - 30px);
+             height: 500px;
+         }
+         </style>
+         
+         <div class="container" style="display: flex
+         ;
+             flex-direction: row;
+             flex-wrap: wrap;">
+            <div class="box_main">
+               <div class="chart-box">
+                  <canvas id="salesChart" width="400" height="200"></canvas>
+               </div>
+               <div class="description-box">
+                    <p>
+                      <strong>Daily Sales:</strong> This bar chart illustrates the total sales amount for each day, providing a detailed view of daily sales performance.
+                    </p>
+               </div>
+            </div>
+         
+            <div class="box_main">
+               <div class="chart-box">
+                  <canvas id="monthlySalesChart" width="400" height="200"></canvas>
+               </div>
+               <div class="description-box">
+                  <p>
+                     <strong>Monthly Purchases:</strong> This line chart shows the total number of products purchased over
+                     each month, allowing you to identify trends and peak sales periods.
+                  </p>
+               </div>
+            </div>
+         
+            <div class="box_main">
+               <div class="chart-box">
+                  <canvas id="yearlyProductSalesChart" width="400" height="200"></canvas>
+               </div>
+               <div class="description-box">
+                  <p>
+                     <strong>Yearly Product Sales:</strong> This chart displays the total sales of products over the past
+                     years, giving a long-term perspective on sales growth or decline.
+                  </p>
+               </div>
+            </div>
+         
+            <div class="box_main" style="height: fit-content;">
+               <div class="chart-box">
+                  <canvas id="categorySpendingChart" width="400" height="200"></canvas>
+               </div>
+               <div class="description-box">
+                  <p>
+                     <strong>Category Spending:</strong> This chart breaks down spending by product categories, providing
+                     insights into which categories generate the most revenue.
+                  </p>
+               </div>
+            </div>
+         </div>
+         
+      
+
+   </div>
+
+   <div class="footer_section layout_padding">
+      <div class="container">
+         <div class="logo"><a href="index.html"><img src="../images/brandLogo.png"></a></div>
+         <div class="input_bt">
+            <input type="text" class="mail_bt" placeholder="Your Email" name="Your Email">
+            <span class="subscribe_bt" id="basic-addon2"><a href="#">Subscribe</a></span>
+         </div>
+         <div class="location_main">Help Line Number : <a href="https://wa.me/970592448690" target="_blank">+970 592 448
+               690</a></div>
+      </div>
+   </div>
+
+   <div class="copyright_section">
+      <div class="container">
+         <p class="copyright_text">&copy; 2024 All Rights Reserved. Design by <a
+               href="https://www.facebook.com/abdalhameed.maree">AbdAlhameed Maree</a></p>
+      </div>
+   </div>
+
+   <script>
+      fetch('total_items_bought.php')
+         .then(response => {
+            if (!response.ok) {
+               throw new Error('Network response was not ok');
+            }
+            return response.json();
+         })
+         .then(data => {
+            if (data.error) {
+               alert('Error: ' + data.error);
+               document.getElementById('totalBought').textContent = '0';
+            } else {
+               document.getElementById('totalBought').textContent = data.total_products_bought;
+            }
+         })
+         .catch(error => {
+            console.error('Error fetching data:', error);
+            alert('Failed to load customer data.');
+         });
+   </script>
+
+   <script>
+      fetch('total_purchase_price.php')
+         .then(response => {
+            if (!response.ok) {
+               throw new Error('Network response was not ok');
+            }
+            return response.json();
+         })
+         .then(data => {
+            if (data.error) {
+               alert('Error: ' + data.error);
+               document.getElementById('totalPurchasePrice').textContent = '0';
+            } else {
+               document.getElementById('totalPurchasePrice').textContent = data.total_purchase_price;
+            }
+         })
+         .catch(error => {
+            console.error('Error fetching data:', error);
+            alert('Failed to load customer data.');
+         });
+   </script>
+
+
+
+   <!-- testfdfffffffffffffffffffffffffffff -->
+   <script>
+      document.addEventListener('DOMContentLoaded', function () {
+         fetchCustomerData();
+      });
+
+      function fetchCustomerData() {
+         fetch('get_customer.php')
+            .then(response => response.json())
+            .then(data => {
+               if (data.error) {
+                  alert(data.error);
+               } else {
+                  // Update HTML with customer data
+                  document.getElementById('customer-name').innerText = data.name || 'N/A';
+                  document.getElementById('customer-email').innerText = data.email || 'N/A';
+                  document.getElementById('customer-phone').innerText = data.phone || 'N/A';
+                  document.getElementById('customer-birth').innerText = data.birth_date || 'N/A';
+                  // document.getElementById('customer-password').innerText = data.password || 'N/A';
+                  document.getElementById('customer-gender').innerText = data.gender || 'N/A';
+               }
+            })
+            .catch(error => {
+               console.error('Error fetching customer data:', error);
+               alert('Failed to load customer data.');
+            });
+      }
+   </script>
+
+   <!-- daily purchase chart -->
+   <script>
+      // Fetch data from PHP script
+      fetch('daily_purchase.php')
+         .then(response => response.json())
+         .then(data => {
+            if (data.error) {
+               alert('Error: ' + data.error);
+               return;
+            }
+
+            const purchaseDates = [];
+            const totalPrices = [];
+
+            // Iterate over the response and push data to arrays
+            data.forEach(item => {
+               purchaseDates.push(item.purchase_date);
+               totalPrices.push(item.total_price);
+            });
+
+            // Render chart
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            new Chart(ctx, {
+               type: 'bar',
+               data: {
+                  labels: purchaseDates,
+                  datasets: [{
+                     label: 'Total Price',
+                     data: totalPrices,
+                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                     borderColor: 'rgba(75, 192, 192, 1)',
+                     borderWidth: 1
+                  }]
+               },
+               options: {
+                  scales: {
+                     y: {
+                        beginAtZero: true
+                     }
+                  }
+               }
+            });
+         })
+         .catch(error => console.error('Error fetching data:', error));
+   </script>
+
+   <!-- monthly purchase chart -->
+   <script>
+      // Fetch data from PHP script
+      fetch('monthly_purchase.php')
+         .then(response => response.json())
+         .then(data => {
+            if (data.error) {
+               alert('Error: ' + data.error);
+               return;
+            }
+
+            const labels = [];
+            const totalPrices = [];
+
+            // Iterate over the response and push data to arrays
+            data.forEach(item => {
+               const label = `${item.year}-${String(item.month).padStart(2, '0')} (${item.product_name})`;
+               labels.push(label);
+               totalPrices.push(item.total_purchase_price);
+            });
+
+            // Render chart
+            const ctx = document.getElementById('monthlySalesChart').getContext('2d');
+            new Chart(ctx, {
+               type: 'bar',
+               data: {
+                  labels: labels,
+                  datasets: [{
+                     label: 'Total Purchase Price',
+                     data: totalPrices,
+                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                     borderColor: 'rgba(153, 102, 255, 1)',
+                     borderWidth: 1
+                  }]
+               },
+               options: {
+                  scales: {
+                     y: {
+                        beginAtZero: true
+                     }
+                  }
+               }
+            });
+         })
+         .catch(error => console.error('Error fetching data:', error));
+   </script>
+
+   <!-- yearly purchase chart -->
+   <script>
+      // Fetch data from PHP script
+      fetch('yearly_purchase.php')
+         .then(response => response.json())
+         .then(data => {
+            if (data.error) {
+               alert('Error: ' + data.error);
+               return;
+            }
+
+            const labels = [];
+            const totalPrices = [];
+
+            // Iterate over the response and push data to arrays
+            data.forEach(item => {
+               const label = `${item.year} - ${item.product_name}`;
+               labels.push(label);
+               totalPrices.push(item.total_purchase_price);
+            });
+
+            // Render chart
+            const ctx = document.getElementById('yearlyProductSalesChart').getContext('2d');
+            new Chart(ctx, {
+               type: 'bar',
+               data: {
+                  labels: labels,
+                  datasets: [{
+                     label: 'Total Purchase Price',
+                     data: totalPrices,
+                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                     borderColor: 'rgba(54, 162, 235, 1)',
+                     borderWidth: 1
+                  }]
+               },
+               options: {
+                  scales: {
+                     y: {
+                        beginAtZero: true
+                     }
+                  }
+               }
+            });
+         })
+         .catch(error => console.error('Error fetching data:', error));
+   </script>
+
+   <!-- categories percentage -->
+   <script>
+      fetch('categories_percentage.php')
+         .then(response => response.json())
+         .then(data => {
+            if (data.error) {
+               alert('Error: ' + data.error);
+               return;
+            }
+
+            const categories = [];
+            const spending = [];
+            const percentages = [];
+
+            data.forEach(item => {
+               categories.push(item.category);
+               spending.push(item.total_spent);
+               percentages.push(item.percentage.toFixed(2) + '%');
+            });
+
+            const ctx = document.getElementById('categorySpendingChart').getContext('2d');
+            new Chart(ctx, {
+               type: 'pie',
+               data: {
+                  labels: categories,
+                  datasets: [{
+                     label: 'Spending by Category',
+                     data: spending,
+                     backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                     ],
+                     borderWidth: 1
+                  }]
+               },
+               options: {
+                  plugins: {
+                     tooltip: {
+                        callbacks: {
+                           label: function (tooltipItem) {
+                              const value = tooltipItem.raw;
+                              const percentage = percentages[tooltipItem.dataIndex];
+                              return `${value} (${percentage})`;
+                           }
+                        }
+                     }
+                  }
+               }
+            });
+         })
+         .catch(error => console.error('Error fetching data:', error));
+   </script>
+
+
+</body>
+
+</html>

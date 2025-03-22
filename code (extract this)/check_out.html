@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <link rel="stylesheet" href="../css/Check_out.css">
+  <script src="https://kit.fontawesome.com/bb515311f9.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="checkout-container">
+    <form class="checkout-form" onsubmit="completePayment(event)">
+      <h1>Checkout</h1>
+
+      <section class="form-section">
+        <h2>Billing Information</h2>
+        <div class="form-group">
+          <label for="full-name">Full Name</label>
+          <input type="text" id="full-name" name="full-name" placeholder="Satoshi Nakamoto" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="example@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" id="address" name="address" placeholder="123 Main St" required>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>Payment Information</h2>
+        <div class="form-group">
+          <label for="credit-card-num">Card Number</label>
+          <input type="text" id="credit-card-num" name="credit-card-num" placeholder="1111-2222-3333-4444" required>
+        </div>
+        <div class="form-group">
+          <label for="expiration-month">Expiration Date</label>
+          <div class="expiration-fields">
+            <select id="expiration-month" name="expiration-month" required>
+              <option value="" disabled selected>Month</option>
+              <option value="01">January</option>
+              <option value="02">February</option>
+              <option value="03">March</option>
+              <option value="04">April</option>
+              <option value="05">May</option>
+              <option value="06">June</option>
+              <option value="07">July</option>
+              <option value="08">August</option>
+              <option value="09">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <select id="expiration-year" name="expiration-year" required>
+              <option value="" disabled selected>Year</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+              <option value="2030">2030</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cvv">CVV</label>
+          <input type="text" id="cvv" name="cvv" placeholder="123" required>
+        </div>
+      </section>
+      <button class="btn" type="submit">Complete Payment</button>
+    </form>
+  </div>
+</body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const totalPriceElement = document.getElementById("total-price-summary");
+
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let totalPrice = 0;
+
+    cart.forEach(item => {
+      totalPrice += item.quantity * item.details.price;
+    });
+
+    if (totalPriceElement) {
+      totalPriceElement.textContent = `$${totalPrice.toFixed(2)}`;
+    }
+  });
+
+  function completePayment(event) {
+    event.preventDefault();
+    localStorage.clear();
+    window.location.href = 'ty.html';
+  }
+</script>
+
+</html>

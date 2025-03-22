@@ -1,0 +1,307 @@
+body {
+  background: #ddd;
+  min-height: 100vh;
+  display: flex;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.product-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  background-color: #fff;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.product-image img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.product-info {
+  flex: 2;
+}
+
+.product-name {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.product-category {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #f26522;
+}
+
+.product-stock, .product-discount {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.product-controls {
+  flex: 1;
+  text-align: right;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.quantity {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  min-width: 30px;
+  text-align: center;
+}
+
+.quantity-btn {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.quantity-btn:hover {
+  color: #f26522;
+}
+
+.product-total {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #444;
+}
+
+.close {
+  font-size: 1.2rem;
+  color: #f26522;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #d9534f;
+}
+
+.card {
+  margin: auto;
+  max-width: 950px;
+  width: 90%;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1rem;
+  border: transparent;
+  display: flex;
+  flex-direction: row;
+}
+
+.cart {
+  background-color: #fff;
+  padding: 4vh 5vh;
+  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem;
+  flex: 2;
+}
+
+.summary {
+  background-color: #ddd;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  padding: 4vh;
+  color: rgb(65, 65, 65);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  margin-bottom: 5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1vh 0;
+}
+
+.border-top {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  padding: 2vh 0;
+}
+
+.col {
+  flex: 1;
+  padding: 0 1vh;
+}
+.operations_col {
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.col-2 {
+  flex: 0 0 3.5rem;
+  padding: 0;
+}
+
+img {
+  width: 3.5rem;
+}
+
+.btn {
+  background-color: #000;
+  border: none;
+  color: white;
+  width: 100%;
+  font-size: 0.8rem;
+  padding: 1vh;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #444;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+input, select {
+  width: 100%;
+  padding: 1vh;
+  margin: 1vh 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.text-muted {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.text-right {
+  text-align: right;
+}
+
+@media(max-width: 767px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .cart {
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  .summary {
+    border-radius: 0 0 1rem 1rem;
+  }
+}
+
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: 0;
+    font-weight: normal;
+    position: relative;
+    padding: 0 0 10px 0;
+    font-weight: normal;
+    line-height: normal;
+    color: #111111;
+    margin: 0
+}
+
+h1 {
+    font-size: 24px
+}
+
+h2 {
+    font-size: 22px
+}
+
+h3 {
+    font-size: 18px
+}
+
+h4 {
+    font-size: 16px
+}
+
+h5 {
+    font-size: 14px
+}
+
+h6 {
+    font-size: 13px
+}
+
+.go_back a {
+  width: 100%;
+  font-size: 20px;
+  color: #f26522;
+  background-color: transparent;
+  text-align: right;
+  font-weight: bold;
+}
+.go_back a:hover {
+  color: rgb(0, 0, 0); /* Optional: Change text color to white for better contrast */
+}
+
+
+#cart-items {
+  max-height: 400px; /* Set a maximum height for the container */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px;
+}
+
+/* Optional: Style the scrollbar for better aesthetics */
+#cart-items::-webkit-scrollbar {
+  width: 10px;
+}
+
+#cart-items::-webkit-scrollbar-thumb {
+  background-color: #888; /* Customize scrollbar thumb color */
+  border-radius: 5px;
+}
+
+#cart-items::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color on hover */
+}

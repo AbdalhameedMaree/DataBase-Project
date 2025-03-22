@@ -1,0 +1,131 @@
+/* Google Fonts Link */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Resetting default styling and setting font-family */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    padding: 0 10px;
+    display: flex;
+    background: #626cd6;
+    justify-content: center;
+    align-items: center;
+}
+
+/* General form styling */
+.general_form {
+    width: 100%;
+    max-width: 435px;
+    background: #fff;
+    border-radius: 6px;
+    padding: 41px 30px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.general_form h3 {
+  font-size: 30px;
+  text-align: center;
+  color: #626cd6; /* Adding color to match the theme */
+  margin-bottom: 20px; /* Adding some space below the heading */
+  font-weight: 600; /* Making the font slightly bolder */
+}
+
+/* Account type dropdown styling */
+form .account_type {
+  margin-bottom: 25px; /* Add space below the dropdown */
+}
+
+form .account_type label {
+  display: block;
+  margin-bottom: 8px; /* Add space below the label */
+  color: #000000; /* Match the theme color */
+}
+
+form .account_type select {
+  width: 100%;
+  height: 57px;
+  border: 1px solid #DADAF2;
+  border-radius: 5px;
+  outline: none;
+  background: #F8F8FB;
+  font-size: 17px;
+  padding: 0 20px;
+  color: #000000; /* Text color to match theme */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+form .account_type select:focus {
+  border-color: #626cd6; /* Highlight border on focus */
+  box-shadow: 0 0 5px rgba(98, 108, 214, 0.5); /* Add subtle glow */
+}
+
+form .account_type select option {
+  background: #fff;
+  color: #000000; /* Option text color */
+}
+
+
+/* Input field styling */
+form .input_box input {
+    width: 100%;
+    height: 57px;
+    border: 1px solid #DADAF2;
+    border-radius: 5px;
+    outline: none;
+    background: #F8F8FB;
+    font-size: 17px;
+    padding: 0px 20px;
+    margin-bottom: 25px;
+    transition: 0.2s ease;
+}
+
+form .input_box input:focus {
+    border-color: #626cd6;
+}
+
+form .input_box .password_title {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color: #626cd6;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Login button styling */
+form button {
+    width: 100%;
+    height: 56px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background: #626CD6;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 28px;
+    transition: 0.3s ease;
+}
+
+form button:hover {
+    background: #4954d0;
+}
