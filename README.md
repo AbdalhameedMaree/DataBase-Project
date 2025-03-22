@@ -48,5 +48,5 @@ This project is a database management system designed to efficiently store, retr
 This project is licensed under the MIT License.
 
 ## Contact
-For inquiries, contact: [Your Email or GitHub Profile]
+For inquiries, contact: mareeabdalhameed@gmail.com
 
